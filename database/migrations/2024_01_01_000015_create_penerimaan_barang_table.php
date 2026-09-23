@@ -12,13 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('penerimaan_barang', function (Blueprint $table) {
-            $table->id('id_penerimaan');
-            $table->unsignedBigInteger('id_detail_pembelian');
-            $table->date('tanggal_terima');
-            $table->decimal('jumlah_diterima', 14, 3);
-            $table->string('keterangan', 255)->nullable();
-
-            $table->foreign('id_detail_pembelian')->references('id_detail_pembelian')->on('detail_pembelian')->onDelete('cascade');
+            $table->id();
+            $table->foreignId('detail_pembelian_id')->constrained('detail_pembelian')->cascadeOnDelete();
+            $table->date('tgl_terima');
+            $table->decimal('jumlah_diterima', 14, 3); // aktual dalam satuan dasar (trigger tambah stok)
         });
     }
 

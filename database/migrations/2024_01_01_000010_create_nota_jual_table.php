@@ -12,15 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('nota_jual', function (Blueprint $table) {
-            $table->id('id_nota_jual');
-            $table->unsignedBigInteger('id_user');
-            $table->date('tanggal');
-            $table->enum('jenis', ['dine-in', 'take-away', 'delivery']);
-            $table->decimal('service_charge', 12, 2)->default(0);
-            $table->decimal('total', 12, 2);
+            $table->id();
+            $table->date('tgl');
+            $table->foreignId('kasir_id')->constrained('user')->cascadeOnDelete();
+            $table->enum('jenis', ['dine_in', 'takeaway']);
+            $table->decimal('total_nota', 12, 2)->default(0);
+            $table->decimal('service_charge', 12, 2)->default(0); // TODO: Konfirmasi dengan dosen
             $table->timestamp('created_at')->useCurrent();
-
-            $table->foreign('id_user')->references('id_user')->on('user')->onDelete('cascade');
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

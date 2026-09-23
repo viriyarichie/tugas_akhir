@@ -12,16 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('bahan_baku', function (Blueprint $table) {
-            $table->id('id_bahan');
-            $table->string('nama_bahan', 100);
-            $table->decimal('total_stok', 14, 3);
-            $table->string('idsatuan', 3);
+            $table->id();
+            $table->string('nama', 100);
+            $table->foreignId('satuan_dasar_id')->constrained('satuan')->cascadeOnDelete();
+            $table->decimal('total_stok', 14, 3)->default(0);
+            $table->enum('kategori', ['utama', 'pendukung']);
+            // TODO: stok_onorder_customer & stok_onorder_supplier (Menunggu konfirmasi)
             $table->integer('stok_onorder_customer')->default(0);
             $table->integer('stok_onorder_supplier')->default(0);
-            $table->enum('kategori', ['utama', 'tambahan', 'kemasan']);
             $table->timestamp('created_at')->useCurrent();
-
-            $table->foreign('idsatuan')->references('idsatuan')->on('satuan')->onDelete('cascade');
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

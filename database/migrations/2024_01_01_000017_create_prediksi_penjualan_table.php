@@ -12,16 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('prediksi_penjualan', function (Blueprint $table) {
-            $table->id('id_prediksi');
-            $table->unsignedBigInteger('id_menu');
+            $table->id();
+            $table->foreignId('menu_id')->constrained('menu')->cascadeOnDelete();
             $table->date('tgl_awal');
             $table->date('tgl_akhir');
-            $table->enum('metode', ['SMA', 'WMA', 'EMA']);
-            $table->decimal('hasil_prediksi', 12, 2);
+            $table->enum('metode', ['TES', 'Census II']);
+            $table->decimal('nilai_prediksi', 12, 2);
             $table->decimal('mape', 6, 3)->nullable();
             $table->timestamp('created_at')->useCurrent();
-
-            $table->foreign('id_menu')->references('id_menu')->on('menu')->onDelete('cascade');
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

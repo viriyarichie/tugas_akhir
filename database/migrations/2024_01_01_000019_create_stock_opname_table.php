@@ -12,16 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('stock_opname', function (Blueprint $table) {
-            $table->id('id_stock_opname');
-            $table->unsignedBigInteger('id_bahan');
-            $table->unsignedBigInteger('id_user');
-            $table->date('tanggal_cek');
+            $table->id();
+            $table->foreignId('bahan_baku_id')->constrained('bahan_baku')->cascadeOnDelete();
+            $table->date('tgl');
             $table->decimal('stok_sistem', 14, 3);
-            $table->decimal('stok_real', 14, 3);
-            $table->string('keterangan', 255)->nullable();
-
-            $table->foreign('id_bahan')->references('id_bahan')->on('bahan_baku')->onDelete('cascade');
-            $table->foreign('id_user')->references('id_user')->on('user')->onDelete('cascade');
+            $table->decimal('stok_fisik', 14, 3);
+            $table->decimal('selisih', 14, 3);
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

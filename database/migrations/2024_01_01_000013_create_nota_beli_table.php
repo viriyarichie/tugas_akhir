@@ -12,14 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('nota_beli', function (Blueprint $table) {
-            $table->id('id_nota_beli');
-            $table->unsignedBigInteger('id_supplier');
-            $table->unsignedBigInteger('id_user');
-            $table->date('tanggal');
+            $table->id();
+            $table->date('tgl');
+            $table->foreignId('supplier_id')->nullable()->constrained('supplier')->cascadeOnDelete(); // nullable in case beli di pasar
+            $table->decimal('total_nota', 12, 2)->default(0);
             $table->timestamp('created_at')->useCurrent();
-
-            $table->foreign('id_supplier')->references('id_supplier')->on('supplier')->onDelete('cascade');
-            $table->foreign('id_user')->references('id_user')->on('user')->onDelete('cascade');
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 
