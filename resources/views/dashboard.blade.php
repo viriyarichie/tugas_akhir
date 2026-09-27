@@ -26,4 +26,28 @@
             <li>Belum ada aktivitas</li>
         </ul>
     </section>
+
+    <section>
+    <h3>Link</h3>
+        <ul>
+            <li>
+                <a href="{{ route('admin.kategori-menu.index') }}">Kategori Menu</a>
+            </li>
+            <li>
+                <a href="{{ route('admin.menu.index') }}">Menu</a>
+            </li>
+            <li>
+                <a href="{{ route('admin.satuan.index') }}">Satuan</a>
+            </li>
+                      <li>
+                <a href="{{ route('admin.bahan-baku.index') }}">Bahan Baku</a>
+            </li>
+                      <li>
+                <a href="{{ route('admin.supplier.index') }}">Supplier</a>
+            </li>
+                      <li>
+                <a href="{{ route('admin.user.index') }}">User</a>
+            </li>
+        </ul>
+    </section>
 @endsection

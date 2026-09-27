@@ -21,48 +21,48 @@ class MasterDataSeeder extends Seeder
         // 1. User
         User::create([
             'nama' => 'Admin Sistem',
-            'email' => 'admin@resto.com',
+            'email' => 'admin@gmail.com',
             'password' => Hash::make('password'),
             'role' => 'admin',
         ]);
         User::create([
             'nama' => 'Manajer Operasional',
-            'email' => 'manajer@resto.com',
+            'email' => 'manajer@gmail.com',
             'password' => Hash::make('password'),
             'role' => 'manajer',
         ]);
         User::create([
             'nama' => 'Kasir 1',
-            'email' => 'kasir@resto.com',
+            'email' => 'kasir@gmail.com',
             'password' => Hash::make('password'),
             'role' => 'kasir',
         ]);
 
         // 2. Satuan
         $satuans = [
-            ['nama' => 'gram'],
-            ['nama' => 'ml'],
-            ['nama' => 'kg'],
-            ['nama' => 'liter'],
-            ['nama' => 'pcs'],
+            ['idsatuan' => 'GR', 'satuan' => 'gram'],
+            ['idsatuan' => 'ML', 'satuan' => 'ml'],
+            ['idsatuan' => 'KG', 'satuan' => 'kg'],
+            ['idsatuan' => 'LTR', 'satuan' => 'liter'],
+            ['idsatuan' => 'PCS', 'satuan' => 'pcs'],
         ];
         foreach ($satuans as $s) Satuan::create($s);
 
         // 3. Supplier
-        Supplier::create(['nama' => 'Pasar Tradisional', 'kontak' => '-', 'lead_time' => 1]);
-        Supplier::create(['nama' => 'PT Daging Sapi Segar', 'kontak' => '08123456789', 'lead_time' => 3]);
-        Supplier::create(['nama' => 'Distributor Sayur', 'kontak' => '08987654321', 'lead_time' => 2]);
+        Supplier::create(['nama_supplier' => 'Pasar Tradisional', 'kontak' => '-', 'alamat' => '-']);
+        Supplier::create(['nama_supplier' => 'PT Daging Sapi Segar', 'kontak' => '08123456789', 'alamat' => 'Jl. Merdeka No 1']);
+        Supplier::create(['nama_supplier' => 'Distributor Sayur', 'kontak' => '08987654321', 'alamat' => 'Pasar Induk']);
 
         // 4. Kategori Menu
-        $km1 = KategoriMenu::create(['nama' => 'Makanan Utama']);
-        $km2 = KategoriMenu::create(['nama' => 'Minuman']);
-        $km3 = KategoriMenu::create(['nama' => 'Cemilan']);
+        $km1 = KategoriMenu::create(['nama_kategori' => 'Makanan Utama']);
+        $km2 = KategoriMenu::create(['nama_kategori' => 'Minuman']);
+        $km3 = KategoriMenu::create(['nama_kategori' => 'Cemilan']);
 
         // 5. Menu
-        Menu::create(['nama' => 'Nasi Goreng Spesial', 'kategori_menu_id' => $km1->id, 'harga_jual' => 25000]);
-        Menu::create(['nama' => 'Mie Goreng Seafood', 'kategori_menu_id' => $km1->id, 'harga_jual' => 30000]);
-        Menu::create(['nama' => 'Es Teh Manis', 'kategori_menu_id' => $km2->id, 'harga_jual' => 5000]);
-        Menu::create(['nama' => 'Jus Jeruk', 'kategori_menu_id' => $km2->id, 'harga_jual' => 12000]);
-        Menu::create(['nama' => 'Kentang Goreng', 'kategori_menu_id' => $km3->id, 'harga_jual' => 15000]);
+        Menu::create(['nama_menu' => 'Nasi Goreng Spesial', 'kategori_menu_idkategori_menu' => $km1->idkategori_menu, 'harga_jual' => 25000]);
+        Menu::create(['nama_menu' => 'Mie Goreng Seafood', 'kategori_menu_idkategori_menu' => $km1->idkategori_menu, 'harga_jual' => 30000]);
+        Menu::create(['nama_menu' => 'Es Teh Manis', 'kategori_menu_idkategori_menu' => $km2->idkategori_menu, 'harga_jual' => 5000]);
+        Menu::create(['nama_menu' => 'Jus Jeruk', 'kategori_menu_idkategori_menu' => $km2->idkategori_menu, 'harga_jual' => 12000]);
+        Menu::create(['nama_menu' => 'Kentang Goreng', 'kategori_menu_idkategori_menu' => $km3->idkategori_menu, 'harga_jual' => 15000]);
     }
 }
