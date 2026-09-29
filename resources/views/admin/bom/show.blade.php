@@ -10,36 +10,34 @@
         @endif
 
         <button type="button" class="btn btn-warning mb-3" data-bs-toggle="modal" data-bs-target="#modalCreate">
-            + Tambah Menu
+            + Tambah Bahan
         </button>
 
+        <h1>BELUM BUAT BUTTON ACTION YAA</h1>
+        <h2>progress : bisa select bahan baku yang belum ada di resep ini, tapi belum bisa edit dan delete</h2>
         <table class="table">
             <thead>
                 <tr>
                     <td style="font-weight:bold">ID</td>
-                    <td style="font-weight:bold">Nama Menu</td>
-                    <td style="font-weight:bold">Harga</td>
-                    <td style="font-weight:bold">Kategori</td>
-                    <td style="font-weight:bold">Aksi</td>
+                    <td style="font-weight:bold">Nama Bahan</td>
+                    <td style="font-weight:bold">Jumlah</td>
+                    <td style="font-weight:bold">Satuan</td>
+                    <td style="font-weight:bold" class="text-center">Aksi</td>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($menus as $menu)
-                    <tr id="tr_{{ $menu->id_menu }}">
-                        <td>{{ $menu->id_menu }}</td>
-                        <td id="td_nama_{{ $menu->id_menu }}">{{ $menu->nama_menu }}</td>
-                        <td id="td_harga_{{ $menu->id_menu }}">{{ number_format($menu->harga_jual, 0, ',', '.') }}</td>
-                        <td id="td_kategori_{{ $menu->id_menu }}">{{ $menu->kategoriMenu->nama_kategori ?? '-' }}</td>
-                        <td>
-                            <a href="{{ route('admin.bom.show', $menu->id_menu) }}" class="btn btn-info btn-sm text-white">
-                                Resep
-                            </a>
+                @foreach ($boms as $bom)
+                    <tr id="tr_{{ $bom->id_bom }}">
+                        <td>{{ $bom->id_bom }}</td>
+                        <td id="td_nama_{{ $bom->id_bom }}">{{ $bom->bahanBaku->nama_bahan ?? '-' }}</td>
+                        <td id="td_jumlah_{{ $bom->id_bom }}">{{ $bom->jumlah_bahan ?? '-' }}</td>
+                        <td id="td_satuan_{{ $bom->id_bom }}">{{ $bom->satuan->idsatuan ?? '-' }}</td>
+                        <td class="text-center">
                             <a href="#modalEdit" class="btn btn-warning btn-sm" data-bs-toggle="modal"
-                                onclick="getEditForm({{ $menu->id_menu }})">Edit</a>
-
+                                onclick="getEditForm({{ $bom->id_bom }})">Edit</a>
 
                             <a href="#" class="btn btn-danger btn-sm"
-                                onclick="if(confirm('Apakah Anda yakin ingin menghapus {{ $menu->id_menu }} - {{ $menu->nama_menu }}?')) deleteDataRemove({{ $menu->id_menu }})">
+                                onclick="if(confirm('Apakah Anda yakin ingin menghapus {{ $bom->id_bom }} - {{ $bom->bahanBaku->nama_bahan }}?')) deleteDataRemove({{ $bom->id_bom }})">
                                 Delete
                             </a>
                         </td>
@@ -54,32 +52,27 @@
     <!-- Modal Create -->
     <div class="modal fade" id="modalCreate" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
-            <form method="POST" action="{{ route('admin.menu.store') }}">
+            <form method="POST" action="{{ route('admin.bom.store') }}">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Tambah Menu Baru</h4>
+                        <h4 class="modal-title">Tambah Bahan Baru</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         @csrf
+                        <input type="hidden" name="id_menu" value="{{ $selectedMenu->id_menu }}">
                         <div class="form-group mb-2">
-                            <label>Nama Menu</label>
-                            <input type="text" class="form-control" name="nama" placeholder="Masukkan Nama Menu"
-                                required>
-                        </div>
-                        <div class="form-group mb-2">
-                            <label>Harga</label>
-                            <input type="number" class="form-control" name="harga_jual" placeholder="Masukkan Harga"
-                                required>
-                        </div>
-                        <div class="form-group mb-2">
-                            <label>Kategori</label>
-                            <select class="form-control" name="kategori_menu_id" required>
-                                <option value="">Pilih Kategori</option>
-                                @foreach ($kategoriMenus as $kategoriMenu)
-                                    <option value="{{ $kategoriMenu->id }}">{{ $kategoriMenu->nama }}</option>
+                            <label>Bahan Baku</label>
+                            <select class="form-control" name="id_bahan" required>
+                                <option value="">Pilih Bahan Baku</option>
+                                @foreach ($bahanBakus as $bahan)
+                                    <option value="{{ $bahan->id_bahan }}">{{ $bahan->nama_bahan }} ({{ $bahan->idsatuan }})</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="form-group mb-2">
+                            <label>Jumlah</label>
+                            <input type="number" step="0.01" class="form-control" name="jumlah_bahan" placeholder="Masukkan Jumlah" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -96,7 +89,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Edit Menu</h4>
+                    <h4 class="modal-title">Edit BOM</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <!-- ID diganti modalContent sesuai pola lama -->
@@ -114,7 +107,7 @@
         function getEditForm(id) {
             $.ajax({
                 type: 'POST',
-                url: '{{ route('admin.menu.getEditForm') }}',
+                url: '{{ route('admin.bom.getEditForm') }}',
                 data: {
                     '_token': '<?php echo csrf_token(); ?>',
                     'id': id
@@ -126,26 +119,20 @@
         }
 
         function saveDataUpdate(id) {
-            var nama = $('#nama_edit').val();
-            var harga_jual = $('#harga_edit').val();
-            var kategori_menu_id = $('#kategori_edit').val();
+            var jumlah = $('#jumlah_edit').val();
 
             $.ajax({
                 type: 'POST',
-                url: '{{ route('admin.menu.saveDataUpdate') }}',
+                url: '{{ route('admin.bom.saveDataUpdate') }}',
                 data: {
                     '_token': '<?php echo csrf_token(); ?>',
                     'id': id,
-                    'nama': nama,
-                    'harga_jual': harga_jual,
-                    'kategori_menu_id': kategori_menu_id
+                    'jumlah_bahan': jumlah
                 },
                 success: function(data) {
                     if (data.status == "oke") {
                         // Update UI tabel secara langsung tanpa reload!
-                        $('#td_nama_' + id).html(nama);
-                        $('#td_harga_' + id).html(harga_jual);
-                        $('#td_kategori_' + id).html($('#kategori_edit option:selected').text());
+                        $('#td_jumlah_' + id).html(jumlah);
                         $('#modalEdit').modal('hide');
                     }
                 }
@@ -155,7 +142,7 @@
         function deleteDataRemove(id) {
             $.ajax({
                 type: 'POST',
-                url: '{{ route('admin.menu.deleteData') }}',
+                url: '{{ route('admin.bom.deleteData') }}',
                 data: {
                     '_token': '<?php echo csrf_token(); ?>',
                     'id': id

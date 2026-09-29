@@ -8,7 +8,7 @@ class Menu extends Model
 {
     protected $table = 'menu';
     protected $primaryKey = 'id_menu';
-    public const UPDATED_AT = null; // created_at exists but no updated_at
+    public const UPDATED_AT = null;
     protected $fillable = ['nama_menu', 'kategori_menu_idkategori_menu', 'harga_jual', 'is_aktif'];
 
     public function kategoriMenu()

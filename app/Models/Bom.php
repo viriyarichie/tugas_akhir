@@ -8,7 +8,7 @@ class Bom extends Model
 {
     protected $table = 'bom';
     protected $primaryKey = 'id_bom';
-    public const UPDATED_AT = null; // created_at exists but no updated_at
+    public $timestamps = false;
     protected $fillable = ['id_menu', 'id_bahan', 'jumlah_bahan', 'idsatuan'];
 
     public function menu()

@@ -28,7 +28,7 @@
     </section>
 
     <section>
-    <h3>Link</h3>
+        <h3>Link Master Data</h3>
         <ul>
             <li>
                 <a href="{{ route('admin.kategori-menu.index') }}">Kategori Menu</a>
@@ -39,15 +39,28 @@
             <li>
                 <a href="{{ route('admin.satuan.index') }}">Satuan</a>
             </li>
-                      <li>
+            <li>
                 <a href="{{ route('admin.bahan-baku.index') }}">Bahan Baku</a>
             </li>
-                      <li>
+            <li>
                 <a href="{{ route('admin.supplier.index') }}">Supplier</a>
             </li>
-                      <li>
+            <li>
                 <a href="{{ route('admin.user.index') }}">User</a>
             </li>
         </ul>
     </section>
+
+    <section>
+        <h3>Link Menu Sidebar</h3>
+        <ul>
+            <li>
+            </li>
+            <li>
+            </li>
+        </ul>
+    </section>
+
+
+
 @endsection

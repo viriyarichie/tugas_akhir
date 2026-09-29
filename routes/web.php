@@ -11,6 +11,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BomController;
 
 
 /*
@@ -90,6 +91,13 @@ Route::middleware(['auth', 'can:access-admin'])
         Route::post('ajax/user/getEditForm', [UserController::class, 'getEditForm'])->name('user.getEditForm');
         Route::post('ajax/user/saveDataUpdate', [UserController::class, 'saveDataUpdate'])->name('user.saveDataUpdate');
         Route::post('ajax/user/deleteData', [UserController::class, 'deleteData'])->name('user.deleteData');
+
+        Route::resource('bom', BomController::class);
+        Route::get('bom/{id}', [BomController::class, 'show'])->name('bom.show');
+        // Rute khusus AJAX
+        Route::post('ajax/bom/getEditForm', [BomController::class, 'getEditForm'])->name('bom.getEditForm');
+        Route::post('ajax/bom/saveDataUpdate', [BomController::class, 'saveDataUpdate'])->name('bom.saveDataUpdate');
+        Route::post('ajax/bom/deleteData', [BomController::class, 'deleteData'])->name('bom.deleteData');
     });
 
 // ==========================================
