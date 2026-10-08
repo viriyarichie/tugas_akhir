@@ -12,7 +12,8 @@ use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BomController;
-
+use App\Http\Controllers\NotaBeliController;
+use App\Http\Controllers\NotaJualController;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,6 +99,24 @@ Route::middleware(['auth', 'can:access-admin'])
         Route::post('ajax/bom/getEditForm', [BomController::class, 'getEditForm'])->name('bom.getEditForm');
         Route::post('ajax/bom/saveDataUpdate', [BomController::class, 'saveDataUpdate'])->name('bom.saveDataUpdate');
         Route::post('ajax/bom/deleteData', [BomController::class, 'deleteData'])->name('bom.deleteData');
+
+        Route::resource('nota-beli', NotaBeliController::class);
+        Route::get('nota-beli/{id}', [NotaBeliController::class, 'show'])->name('nota-beli.show');
+
+        Route::post('ajax/nota-beli/getEditForm', [NotaBeliController::class, 'getEditForm'])->name('nota-beli.getEditForm');
+        Route::post('ajax/nota-beli/saveDataUpdate', [NotaBeliController::class, 'saveDataUpdate'])->name('nota-beli.saveDataUpdate');
+        Route::post('ajax/nota-beli/deleteData', [NotaBeliController::class, 'deleteData'])->name('nota-beli.deleteData');
+        // Rute khusus AJAX untuk detail pembelian
+        Route::post('nota-beli/store-detail', [NotaBeliController::class, 'storeDetail'])->name('nota-beli.storeDetail');
+        Route::post('ajax/nota-beli/getEditFormDetail', [NotaBeliController::class, 'getEditFormDetail'])->name('nota-beli.getEditFormDetail');
+        Route::post('ajax/nota-beli/saveDataUpdateDetail', [NotaBeliController::class, 'saveDataUpdateDetail'])->name('nota-beli.saveDataUpdateDetail');
+        Route::post('ajax/nota-beli/deleteDataDetail', [NotaBeliController::class, 'deleteDataDetail'])->name('nota-beli.deleteDataDetail');
+
+        Route::post('ajax/nota-beli/getTerimaBarangForm', [NotaBeliController::class, 'getTerimaBarangForm'])->name('nota-beli.getTerimaBarangForm');
+        Route::post('ajax/nota-beli/saveTerimaBarang', [NotaBeliController::class, 'saveTerimaBarang'])->name('nota-beli.saveTerimaBarang');
+
+        Route::post('ajax/nota-beli/getBayarForm', [NotaBeliController::class, 'getBayarForm'])->name('nota-beli.getBayarForm');
+        Route::post('ajax/nota-beli/saveBayar', [NotaBeliController::class, 'saveBayar'])->name('nota-beli.saveBayar');
     });
 
 // ==========================================
@@ -127,7 +146,8 @@ Route::middleware(['auth', 'can:access-kasir'])
             return 'Kasir Dashboard';
         })->name('dashboard');
 
-        // Nanti route Kasir (Input Penjualan) ditaruh di sini
+
+        Route::resource('nota-jual', NotaJualController::class);
     });
 
 Auth::routes();

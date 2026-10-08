@@ -55,8 +55,10 @@
         <h3>Link Menu Sidebar</h3>
         <ul>
             <li>
+                <a href="{{ route('admin.user.index') }}">User</a>
             </li>
             <li>
+                <a href="{{ route('admin.nota-beli.index') }}">Nota Beli</a>
             </li>
         </ul>
     </section>
