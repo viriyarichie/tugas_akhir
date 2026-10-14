@@ -34,7 +34,7 @@
                         <td>Rp {{ number_format($notaJual->total, 0, ',', '.') }}</td>
 
                         <td>
-                            <a href="{{ route('kasir.nota-jual.show', $notaJual->id_nota_jual) }}"
+                            <a href="{{ route('admin.nota-jual.show', $notaJual->id_nota_jual) }}"
                                 class="btn btn-info btn-sm text-white">
                                 Detail
                             </a>
@@ -50,7 +50,7 @@
 @push('modals')
     <div class="modal fade" id="modalCreate" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
-            <form method="POST" action="{{ route('kasir.nota-jual.store') }}">
+            <form method="POST" action="{{ route('admin.nota-jual.store') }}">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Tambah Nota Penjualan</h4>

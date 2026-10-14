@@ -60,6 +60,9 @@
             <li>
                 <a href="{{ route('admin.nota-beli.index') }}">Nota Beli</a>
             </li>
+            <li>
+                <a href="{{ route('admin.nota-jual.index') }}">Nota Jual</a>
+            </li>
         </ul>
     </section>
 

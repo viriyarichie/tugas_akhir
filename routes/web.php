@@ -117,6 +117,13 @@ Route::middleware(['auth', 'can:access-admin'])
 
         Route::post('ajax/nota-beli/getBayarForm', [NotaBeliController::class, 'getBayarForm'])->name('nota-beli.getBayarForm');
         Route::post('ajax/nota-beli/saveBayar', [NotaBeliController::class, 'saveBayar'])->name('nota-beli.saveBayar');
+
+        Route::resource('nota-jual', \App\Http\Controllers\NotaJualController::class);
+        Route::post('ajax/nota-jual/storeDetail', [\App\Http\Controllers\NotaJualController::class, 'storeDetail'])->name('nota-jual.storeDetail');
+        Route::post('ajax/nota-jual/deleteDetail', [\App\Http\Controllers\NotaJualController::class, 'deleteDetail'])->name('nota-jual.deleteDetail');
+        Route::post('ajax/nota-jual/saveBayar', [\App\Http\Controllers\NotaJualController::class, 'saveBayar'])->name('nota-jual.saveBayar');
+
+        // Route::get('nota-jual/{id}/checkout', [\App\Http\Controllers\NotaJualController::class, 'checkout'])->name('nota-jual.checkout');
     });
 
 // ==========================================
@@ -143,11 +150,14 @@ Route::middleware(['auth', 'can:access-kasir'])
     ->group(function () {
         // Route::get('dashboard', [KasirDashboardController::class, 'index'])->name('dashboard');
         Route::get('dashboard', function () {
-            return 'Kasir Dashboard';
+            return redirect()->route('kasir.nota-jual.index');
         })->name('dashboard');
 
 
-        Route::resource('nota-jual', NotaJualController::class);
+        // Route::resource('nota-jual', NotaJualController::class);
+        // // Rute untuk mengoperasikan Keranjang
+        // Route::post('ajax/nota-jual/storeDetail', [NotaJualController::class, 'storeDetail'])->name('nota-jual.storeDetail');
+        // Route::post('ajax/nota-jual/deleteDetail', [NotaJualController::class, 'deleteDetail'])->name('nota-jual.deleteDetail');
     });
 
 Auth::routes();
